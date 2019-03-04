@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% if name %}
+	  <h1>Hello {{ name }}!</h1>
+	{% endif %}
+
+	{% if message %}
+	  <h1> {{ message }}!</h1>
+	{% endif %}
+
+	{% if albums %}
+		<h2>Here's your albums</h2>
+	    <ul>
+	    {% for album in albums %}
+	        <a href="photos/{{album}}">{{album}}</a>
+	    {% endfor %}
+	    </ul>
+	{% endif %}
+
+	<div class="col-md-6">
+		<div id="logbox">
+	      <form action="album_creation" method='POST'>
+	        <h1>Create a new album</h1>
+	        <input name="albumName" type="text" placeholder="enter the name of your album" class="input pass"/>
+	        <input name="submit" type="submit" value="Create Album" class="inputButton"/>
+	      </form>
+	    </div>
+	</div>
+
+	{% if friends %}
+		<h2>Here's your friends</h2>
+	    <ul>
+	    {% for friend in friends %}
+	        <li><a href="">{{friend}}</a></li>
+	    {% endfor %}
+	    </ul>
+	{% endif %}
+
+	<h2>Find new friends</h2>
+	<form action="{{ url_for('results') }}" method = "POST">
+   	  	<input type = "text" name="friendsEmail" placeholder="Person's email" />
+
+        <input type="hidden" value = {{friend_id}} name="hidden" required='true' /><br />
+
+  	   	<input type="submit" name="submit" placeholder="Search for friends"/>
+	</form>
+
+	{% if credentials %}
+		<h2>Here's your result</h2>
+	    <p>{{credentials}}</p>
+	    <form action="{{ url_for('add_friend') }}" method = "POST">
+	    	<input type="submit" name="addFriend" value="add friend"/>
+        	<input type="hidden" value = {{friend_id}} name="friend_id" required='true' />
+	    </form>
+	{% endif %}
+
+  {% if activeUsers %}
+    <h2>Here's the most active users</h2>
+      <ul>
+      {% for user in activeUsers %}
+          <li><a href="">{{user}}</a></li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+
+  {% if recommendedPhotos %}
+    <h2>Recommended photos</h2>
+      <ul>
+      {% for photo in recommendedPhotos %}
+          <li><img width="450px" height="300px" src='data:image/png;base64, {{photo[0]}}'/></li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+
+	<ul>
+		<li><a href='/logout'>Logout</a></li>
+		<li><a href='/'>Home</a></li>
+		<li><a href='/profile'>Profile</a></li>
+	</ul>
+
+</body>
+</html>

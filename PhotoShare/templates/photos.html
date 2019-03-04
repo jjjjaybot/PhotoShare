@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Photos</title>
+</head>
+<body>
+	{% if albumName %}
+		<p>{{albumName}}</p>
+		<a href="upload/{{albumName}}">Upload a new photo</a></br>
+		<a href="remove_album/{{albumName}}">Remove Album</a>
+	{% endif %}
+
+	{% if photos %}
+		<h2>Here's your photos</h2>
+	    <ul>
+		    {% for i in range(photos|length) %}
+		        <li><img width="450px" height="300px" src='data:image/png;base64, {{photos[i][0]}}'/></li>
+		        <form method="post" enctype="multipart/form-data" action="{{ url_for('add_tag') }}">
+		        	<input type="hidden" name="albumName" required='true' value={{albumName}} required='true' />
+		        	<input type="hidden" name="pid" required='true' value={{pids[i]}} required='true'/>	    	
+				    <label for="tag">Add a tag</label>
+				    <input type="text" name="word" required='true' /><br />
+				    <input type="submit" value="add a tag"/>
+				</form>
+		        {% if tags %}
+			        <h2>Here's your tags</h2>
+				    <ul>
+					    {% for tag in tags[i] %}
+					        <li>
+					        	<a href="tags/{{tag}}">{{tag}}</a>
+					        </li>
+					    {% endfor %}
+				    </ul>
+				{% endif %}
+		    {% endfor %}
+	    </ul>
+	{% endif %}
+
+
+	<h1>Tag Recommendation</h1>
+	<form method="post" enctype="multipart/form-data" action="{{ url_for('tag_recommend') }}">
+	    <input type="text" name="words" required='true' /><br />
+	    <input type="submit" value="add a tag"/>
+	</form>
+
+	{% if tagsRecommended %}
+        <h2>Here's your recommended tags</h2>
+	    <ul>
+		    {% for tag in tagsRecommended %}
+		        <li>
+		        	<p>{{tag}}</p>
+		        </li>
+		    {% endfor %}
+	    </ul>
+	{% endif %}
+
+</body>
+</html>
+
+
+

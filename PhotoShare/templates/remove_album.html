@@ -1,0 +1,16 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="title">
+        <h1>Remove Album {{album}}</h1>
+    </div>
+
+	<form enctype="multipart/form-data" action="/photos/remove_album/{{album}}" method = "POST">
+  	   	<input type="submit" name="submit" placeholder="Remove album"/>
+	</form>
+</body>
+</html>

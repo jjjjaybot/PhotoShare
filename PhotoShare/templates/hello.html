@@ -1,0 +1,88 @@
+<!-- author ben lawson (balawson@bu.edu) -->
+<!doctype html>
+{% if message %}
+  <h4>{{message}}!</h4>
+{% endif %}
+<title>Photoshare</title>
+{% if name %}
+  <h1>Hello {{ name }}!</h1>
+{% endif %}
+
+
+<h2>Here's your photos</h2>
+    <ul>
+    {% for i in range(photos |length) %}
+
+        <li>
+            </br>
+            <img width="450px" height="300px" src='data:image/png;base64, {{ photos[0] }}'/>
+
+        {% if comments %}
+            <h2>Comments </h2>h2>
+            {%  for comment in comments[i] %}
+                <ul>
+                    <li>{{ comment }}</li>li>
+                </ul>
+            {% endfor %}
+        {% endif %}
+
+        {% if likes %}
+            <h3>Likes:</h3>
+        <p>{{ likes[i] }}</p>
+
+        <h2> Users who like this picture:</h2>
+        {% for user in usersLiked[i] %}
+            <p>{{ user }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form action="add_comment" method = "POST">
+            <input type = "text" name = "comment" />
+            <input type = "hidden" value = {{ i+1 }} name = "picture_id" required = 'true' />
+            <input type = "submit" name = "add_comment" value = "add comment"/>
+        </form>
+
+        <form action="add_like" method="POST">
+            <input type="hidden" value={{ i+1 }} name = "picture_id" required='true' />
+            <input type="submit" name = "add_like" value = "like" />
+        </form>
+
+        </li>
+    {% endfor %}
+    </ul>
+
+{% if message is none %}
+  <p>You should <a href='/login'>login!</a></p>
+{% else %}
+  <p> Go to <a href='/profile'>profile?</a></p>
+{% endif %}
+
+  {% if mostPopularTags%}
+    <h1>Most Popular Tags </h1>
+    {% for tag in mostPopularTags %}
+      <ul>
+        <a href="public_tags/{{tag}}">{{tag}}</a>
+      </ul>
+    {% endfor %}
+  {% endif %}
+  <h1>Search Photos by Tags</h1>
+  <form action="search_by_tag" method = "POST">
+    <input type="text" placeholder="tag" name="tag_name" required='true' />
+    <input type="submit" name="searchByTag" value="search"/>
+  </form>
+
+  {% if search_tags %}
+    {% for tag in search_tags %}
+      <ul>
+            <li>
+              <img width="450px" height="300px" src='data:image/png;base64, {{tag[0]}}'/>
+            </li>
+          </ul>
+      {% endfor %}
+  {% endif %}
+
+<ul>
+<li><a href='/logout'>Logout</a></li>
+<li><a href='/'>Home</a></li>
+</ul>
+

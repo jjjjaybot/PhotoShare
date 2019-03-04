@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1>Results for {{word}} among all photos</h1>
+	{% if photos %}
+		{% for photo in photos %}
+			<ul>
+		        <li>
+		        	<img width="450px" height="300px" src='data:image/png;base64, {{photo[0]}}'/>
+		        </li>
+	        </ul>
+	    {% endfor %}
+	{% endif %}
+</body>
+</html>
